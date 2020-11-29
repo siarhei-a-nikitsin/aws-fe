@@ -15,6 +15,9 @@ type CSVFileImportProps = {
   title: string;
 };
 
+localStorage.clear();
+localStorage.setItem('authorization_token', 'siarhei1988:TEST_PASSWORD')
+
 export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   const classes = useStyles();
   const [file, setFile] = useState<any>();
@@ -38,6 +41,9 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       params: {
         name: encodeURIComponent(file.name),
       },
+      headers: {
+        Authorization: `Basic ${btoa(localStorage.getItem('authorization_token') || '')}`
+      }
     });
     console.log("File to upload: ", file.name);
     console.log("Uploading to: ", response.data);
